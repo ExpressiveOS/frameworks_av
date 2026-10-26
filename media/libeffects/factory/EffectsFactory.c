@@ -643,6 +643,14 @@ void loadViperEffect() {
     void *libHandle = NULL;
     audio_effect_library_t *libDesc = NULL;
     const char *libPath = NULL;
+    lib_entry_t *registeredLib = NULL;
+
+    // An audio_effects.xml entry (e.g. from a ViPER module) may have registered it already
+    if (findEffect(NULL, &kViperImplUuid, &registeredLib, NULL) == 0) {
+        ALOGI("loadViperEffect: ViPER effect already registered by library %s, skipping",
+              registeredLib->name);
+        return;
+    }
 
     for (int i = 0; kViperLibPaths[i] != NULL; i++) {
         if (access(kViperLibPaths[i], R_OK) == 0) {
