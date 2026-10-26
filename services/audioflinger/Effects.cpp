@@ -2971,6 +2971,11 @@ static const effect_uuid_t SL_IID_VOLUME_ = { 0x09e8ede0, 0xddde, 0x11db, 0xb4f6
 const effect_uuid_t * const SL_IID_VOLUME = &SL_IID_VOLUME_;
 #endif //OPENSL_ES_H_
 
+// ViperFx
+static const effect_uuid_t SL_V4A_RE_ = // 90380da3-8536-4744-a6a3-5731970e640f
+{ 0x90380da3, 0x8536, 0x4744, 0xa6a3, {0x57, 0x31, 0x97, 0x0e, 0x64, 0x0f} };
+const effect_uuid_t * const SL_V4A_RE = &SL_V4A_RE_;
+
 /* static */
 bool EffectChain::isEffectEligibleForBtNrecSuspend_l(const effect_uuid_t* type) {
     // Only NS and AEC are suspended when BtNRec is off
@@ -2990,6 +2995,7 @@ bool EffectChain::isEffectEligibleForSuspend(const effect_descriptor_t& desc)
           (desc.flags & EFFECT_FLAG_NOT_ELIGIBLE_SUSPEND) ||
           (memcmp(&desc.type, SL_IID_VISUALIZATION, sizeof(effect_uuid_t)) == 0) ||
           (memcmp(&desc.type, SL_IID_VOLUME, sizeof(effect_uuid_t)) == 0) ||
+          (memcmp(&desc.uuid, SL_V4A_RE, sizeof(effect_uuid_t)) == 0) ||
           (memcmp(&desc.type, SL_IID_DYNAMICSPROCESSING, sizeof(effect_uuid_t)) == 0)))) {
         return false;
     }
