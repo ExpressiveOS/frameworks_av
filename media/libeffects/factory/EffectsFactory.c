@@ -645,6 +645,12 @@ void loadViperEffect() {
     const char *libPath = NULL;
     lib_entry_t *registeredLib = NULL;
 
+    // Recovery/user kill-switch (parity with Pixel 11 aidl-overlay persist.eos.v4a.off)
+    if (property_get_int32("persist.eos.v4a.off", 0) != 0) {
+        ALOGI("loadViperEffect: disabled via persist.eos.v4a.off, skipping");
+        return;
+    }
+
     // An audio_effects.xml entry (e.g. from a ViPER module) may have registered it already
     if (findEffect(NULL, &kViperImplUuid, &registeredLib, NULL) == 0) {
         ALOGI("loadViperEffect: ViPER effect already registered by library %s, skipping",
